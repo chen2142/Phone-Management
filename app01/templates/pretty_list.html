@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <a href="/pretty/add/" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Create Pretty Number modelform
+        </a>
+        
+        <div style="float: right; width: 300px">
+            <form method="get">
+                <div class="input-group">
+                <input name="q" type="text" class="form-control" placeholder="Search for..." value="{{ search_data }}">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </span>
+                </div><!-- /input-group -->
+            </form>
+
+        </div><!-- /.col-lg-6 -->
+
+    </div>
+    <div class="container" style="margin-top: 10px">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Pretty Number List
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Number</th>
+                        <th>Price</th>
+                        <th>Level</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in queryset %}
+                        <tr>
+                            <th scope="row">{{ obj.id }}</th>
+                            <th scope="row">{{ obj.mobile }}</th>
+                            <th scope="row">{{ obj.price }}</th>
+                            <th scope="row">{{ obj.get_level_display }}</th>
+                            <th scope="row">{{ obj.get_status_display }}</th>
+                            <td>
+                                <a href="/pretty/{{ obj.id }}/edit/" class="btn btn-primary btn-xs">edit</a>
+                                <a href="/pretty/{{ obj.id }}/delete/" class="btn btn-danger btn-xs">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

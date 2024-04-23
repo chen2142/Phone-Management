@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <a href="/user/add/" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Create User
+        </a>
+        <a href="/user/model/form/add/" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            Create User modelform
+        </a>
+    </div>
+    <div class="container" style="margin-top: 10px">
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                User List
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Password</th>
+                        <th>Age</th>
+                        <th>Balance</th>
+                        <th>Start Date</th>
+                        <th>Gender</th>
+                        <th>Department</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for obj in query_set %}
+
+                        <tr>
+                            <th scope="row">{{ obj.id }}</th>
+                            <th scope="row">{{ obj.name }}</th>
+                            <th scope="row">{{ obj.password }}</th>
+                            <th scope="row">{{ obj.age }}</th>
+                            <th scope="row">{{ obj.account }}</th>
+                            <th scope="row">{{ obj.create_time|date:"Y-m-d" }}</th>
+                            {#                            <th scope="row">{{ obj.create_time }}</th>#}
+                            <th scope="row">{{ obj.get_gender_display }}</th>
+                            <th scope="row">{{ obj.depart.title }}</th>
+
+                            <td>
+                                <a href="/user/{{ obj.id }}/edit/" class="btn btn-primary btn-xs">edit</a>
+                                <a href="/user/{{ obj.id }}/delete/" class="btn btn-danger btn-xs">delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% for user in page_obj %}
+        {# Each "user" is a UserInfo model object. #}
+        {{ user.name }}
+    {% endfor %}
+
+    <div>
+        <span>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+{#            <span>#}
+{#                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
+{#            </span>#}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
